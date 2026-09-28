@@ -1,0 +1,61 @@
+services:
+  personalization-postgres:
+    image: postgres:latest
+    container_name: personalization_postgres
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_USER=myuser
+      - POSTGRES_DB=mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - personalization_postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - personalization_network
+
+  modeling-backend:
+    build:
+      context: ./BESSER
+      dockerfile: Dockerfile
+    container_name: personalization_modeling_backend
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./BESSER:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    working_dir: /app/besser
+    environment:
+      - PYTHONPATH=/app
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    command: python -m besser.utilities.web_modeling_editor.backend.backend
+    restart: unless-stopped
+    networks:
+      - personalization_network
+
+  modeling-editor:
+    build:
+      context: ./BESSER-WEB-MODELING-EDITOR
+      dockerfile: Dockerfile
+    container_name: personalization_modeling_editor
+    environment:
+      - DEPLOYMENT_URL=${DEPLOYMENT_URL:-http://localhost:8080}
+      - BACKEND_URL=${BACKEND_URL:-http://localhost:9000/besser_api}
+      - UML_BOT_WS_URL=${UML_BOT_WS_URL:-}
+    volumes:
+      - ./BESSER-WEB-MODELING-EDITOR/diagrams:/app/diagrams
+    restart: unless-stopped
+    depends_on:
+      - modeling-backend
+    ports:
+      - "8080:8080"
+    networks:
+      - personalization_network
+
+networks:
+  personalization_network:
+    name: personalization_network
+    driver: bridge
+
+volumes:
+  personalization_postgres_data:

@@ -1,0 +1,21 @@
+{
+  "name": "museum_guide",
+  "protected_states": ["welcome", "menu"],
+  "states": [
+    {
+      "id": "welcome",
+      "replies": ["Welcome to the museum guide. I can help you explore the collection."],
+      "next": "menu"
+    },
+    {
+      "id": "menu",
+      "replies": ["Ask about an artwork, an artist, or practical information."],
+      "next": "answer"
+    },
+    {
+      "id": "answer",
+      "replies": ["I can provide a short explanation of an artwork and suggest a next step."],
+      "next": "menu"
+    }
+  ]
+}

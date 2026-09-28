@@ -1,0 +1,26 @@
+[
+  {
+    "id": "older_french_reader",
+    "conditions": {
+      "language": "French",
+      "age_group": "older adult",
+      "vision": "reduced"
+    },
+    "adaptations": [
+      {"kind": "language", "value": "fr"},
+      {"kind": "text_complexity", "value": "simple"},
+      {"kind": "interface_style", "value": {"size": 20, "contrast": "high", "line_spacing": 1.8}},
+      {"kind": "output_modality", "value": ["text", "speech"]},
+      {"kind": "response_timing", "value": "patient"},
+      {"kind": "runtime_context", "value": "Use clear, respectful French. Give one idea at a time and offer to repeat it."}
+    ]
+  },
+  {
+    "id": "concise_reader",
+    "conditions": {"preference": "brief answers"},
+    "adaptations": [
+      {"kind": "text_complexity", "value": "simple"},
+      {"kind": "response_timing", "value": "immediate"}
+    ]
+  }
+]

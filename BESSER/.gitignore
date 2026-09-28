@@ -1,0 +1,37 @@
+__pycache__/
+.pytest_cache/
+/.idea/
+
+# virtual env
+Pipfile
+Pipfile.lock
+besser_venv/
+.env
+venv/
+
+# package
+/dist/
+buml.egg-info/
+
+# Sphinx documentation
+docs/_build/
+
+# Build
+build
+**/besser.egg-info/**
+
+# ANTLR
+**/.antlr/**
+besser/.idea/workspace.xml
+*.iml
+.idea/inspectionProfiles/profiles_settings.xml
+*.xml
+
+# Backend
+besser/utilities/web_modeling_editor/backend/output
+
+# pylint
+.pylintrc
+
+TEST_GUI/react_output_test/*
+
